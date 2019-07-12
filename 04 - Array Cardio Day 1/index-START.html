@@ -32,22 +32,33 @@
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
     const fifteen = inventors.filter(val => (val.year >= 1500 && val.year <= 1600))
-    console.table(fifteen)
+    console.table(fifteen, 'fifteen')
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
     const fullNames = inventors.map(el => `${el.first} ${el.last}`)
-    console.log(fullNames)
+    console.log(fullNames, 'fullNames')
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
     const ordered = inventors.sort((a, b) => a.year < b.year ? 1 : -1)
-    console.log(ordered)
+    console.log(ordered, 'ordered')
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const totalYears = inventors.reduce((acc, cur) => {
+      return acc + (cur.passed - cur.year);
+    }, 0);
+    console.log(totalYears, 'totalYears')
+
 
     // 5. Sort the inventors by years lived
+    const lived = inventors.sort((a, b) => {
+      const last = a.passed - a.year;
+      const next = b.passed - b.year;
+      return last > next ? -1 : 1;
+    });
+    console.log(lived)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -55,11 +66,28 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const name = people.sort((last, next) => {
+      // console.log(last, next)
+      const [aLast, aFirst] = last.split(', ');
+      // console.log([aLast, aFirst])
+      const [bLast, bFirst] = next.split(', ');
+      // console.log([bLast, bFirst])
+      return aLast > bLast ? 1 : -1;
+    });
+    console.log(name)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    const item = data.reduce((obj, el) => {
+      console.log(obj, el, obj[el])
+      if (!obj[el]) {
+        obj[el] = 0;
+      }
+      obj[el]++;
+      return obj;
+    }, {});
+    console.log(item)
   </script>
 </body>
 </html>
