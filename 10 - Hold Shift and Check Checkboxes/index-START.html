@@ -99,6 +99,41 @@
   </div>
 
 <script>
+const checkboxes = Array.from(document.querySelectorAll('.inbox input[type="checkbox"]'));
+let lastChecked;
+let onOff = false;
+
+function handleCheck(e) {
+  if (!lastChecked) lastChecked = this;
+  onOff = lastChecked.checked ? true : false;
+  if (e.shiftKey) {
+    let start = checkboxes.indexOf(this);
+    let end = checkboxes.indexOf(lastChecked);
+    checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1).forEach(el => el.checked = onOff);
+  }
+
+  // let inbetween = false;
+  // console.log(e,this.checked);
+
+  // if (e.shiftKey && this.checked) {
+  //   console.log(this)
+  //   checkboxes.forEach(el => {
+  //     console.log(el,this,lastChecked)
+  //     if (el === this || el === lastChecked) {
+  //       inbetween = !inbetween;
+  //     }
+
+  //     if (inbetween) {
+  //       el.checked = true;
+  //     }
+  //   })
+  // }
+
+  console.log(this)
+  lastChecked = this;
+}
+
+checkboxes.forEach(el => el.addEventListener('click', handleCheck));
 </script>
 </body>
 </html>
